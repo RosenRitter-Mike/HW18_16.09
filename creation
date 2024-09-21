@@ -1,0 +1,45 @@
+-- Create table for Category with foreign key linking to Products
+CREATE TABLE Category (
+    category_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+-- Create table for Products
+CREATE TABLE Products (
+    product_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    price INTEGER,
+    category_id INTEGER,
+    FOREIGN KEY (category_id) REFERENCES Category(category_id)
+);
+
+-- Create table for Nutritions
+CREATE TABLE Nutritions (
+    nutrition_id INTEGER PRIMARY KEY,
+    product_id INTEGER,
+    name TEXT NOT NULL,
+    calories INTEGER,
+    fats INTEGER,
+    sugar INTEGER,
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+-- Create table for Orders
+CREATE TABLE Orders (
+    order_id INTEGER PRIMARY KEY,
+    date_time DATETIME,
+    address TEXT,
+    customer_name TEXT NOT NULL,
+    customer_ph INTEGER,
+    total_price INTEGER
+);
+
+-- Create table for Product orders
+CREATE TABLE Products_orders (
+    order_id INTEGER,
+    product_id INTEGER,
+    amount INTEGER,
+    FOREIGN KEY (product_id) REFERENCES Products (product_id),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    PRIMARY KEY (order_id, product_id)
+);
